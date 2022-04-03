@@ -1,0 +1,4 @@
+dependencies:
+  - name: agolo-service
+    version: ~1.3.10
+    repository: "@chartmuseum"

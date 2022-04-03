@@ -1,0 +1,96 @@
+version: 2.1
+orbs:
+  agolo: agolo/agolo@volatile
+jobs:
+  test:
+    docker:
+      - image: node:14.17.5-alpine3.14
+    working_directory: ~/project
+    steps:
+      - run: apk update && apk add git openssh python make g++ yarn
+      - checkout
+      - restore_cache:
+          key: npm-packages-v1-test-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+      - run: yarn
+      - run:
+          name: jest test suite
+          command: yarn test:ci
+          environment:
+            JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+      - save_cache:
+          key: npm-packages-v1-test-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - ./node_modules/
+            - ~/.npm/
+  # test-lh:
+  #   docker:
+  #     - image: justinribeiro/lighthouse
+  #       user: root
+  #   working_directory: ~/project
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         command: cd ./lighthouse/ && npm i && npm run test
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - test
+      # - test-lh:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - prod
+      #           - liontree
+
+      - agolo/docker-build:
+          name: docker-test
+          context: mip
+          service: esg-demo
+          language: nodejs
+          # avoid docker push
+          docker-push: false
+          requires:
+            - test
+      - agolo/docker-build:
+          name: docker-build
+          context: docker
+          service: esg-demo
+          language: nodejs
+          requires:
+            - test
+          # by default docker-push is ture
+          filters:
+            branches:
+              only:
+                - staging
+                - prod
+                - /dev-.*/
+                - mip-dev
+          # post-steps:
+          #   - agolo/jira-notify:
+          #       job_type: build
+      - agolo/deploy-k8s:
+          context: docker
+          release: esg-demo
+          extraFlags: -f values.yaml -f "values-${CIRCLE_BRANCH}.yaml"
+          kubeContext: ${CIRCLE_BRANCH}
+          requires:
+            - docker-build
+          filters:
+            branches:
+              only:
+                - staging
+                - prod
+                - /dev-.*/
+                - mip-dev
+          # post-steps:
+          #   - agolo/jira-notify:
+          #       job_type: deployment
+          #       environment: ${CIRCLE_BRANCH}
+          #       environment_type: production

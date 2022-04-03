@@ -1,0 +1,43 @@
+# Default values for moodys-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+# All overridable parameters are defined in `helm-charts/agolo-service/values.yaml``
+
+agolo-service:
+  nameOverride: 'esg-demo'
+  replicas: 1
+  image:
+    repository: agolo.azurecr.io/service/esg-demo
+    tag: staging
+
+  resources:
+    limits:
+      cpu: 1
+      memory: 256Mi
+    requests:
+      cpu: 300m
+      memory: 256Mi
+
+  monitor:
+    probes:
+      # failed liveness probe requests will trigger restarts to your pod
+      liveness:
+        httpGet:
+          path: /
+          port: http
+      # failed readiness probe requests will prevent traffic from flowing to your pod
+      readiness:
+        httpGet:
+          path: /
+          port: http
+
+  network:
+    type: ClusterIP
+    ports:
+      - name: http
+        containerPort: 8080
+        exposedPort: 8080
+        https: true
+        ingresses:
+          - host: esg.staging.agolo.com
+            path: /
