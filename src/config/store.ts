@@ -9,12 +9,16 @@ const defaultMiddlewares: any = [
   promiseMiddleware,
   loadingBarMiddleware(),
 ];
-const composedMiddlewares = (middlewares: never[]) =>
-  process.env.NODE_ENV === 'development'
-    ? compose(applyMiddleware(...defaultMiddlewares, ...middlewares))
-    : compose(applyMiddleware(...defaultMiddlewares, ...middlewares));
+declare global {
+  // eslint-disable-next-line no-unused-vars
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+const middleWareEnhancer = applyMiddleware(...defaultMiddlewares);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const initialize = (initialState?: any, middlewares: any = []) =>
-  createStore(reducer, initialState, composedMiddlewares(middlewares));
+const initialize = (initialState?: any) =>
+  createStore(reducer, initialState, composeEnhancers(middleWareEnhancer));
 
 export default initialize;
