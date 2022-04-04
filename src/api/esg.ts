@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { IEsgSummaryRequest } from '../models/esg-summary.model';
+import {
+  IEsgSummaryRequest,
+  IEsgSummaryResponse,
+} from '../models/esg-summary.model';
 import { IErrorResponse } from '../models/shared';
 import { getCurrentUserEmail, getUserId } from '../utils/helpers';
 
@@ -17,7 +20,7 @@ export const fetchOntologyTopicsAPI = async () => {
       return data;
     }
     return { error: true, message: statusText, status };
-  } catch (err) {
+  } catch (err: any) {
     const { data } = err.response;
     return { error: true, message: data.message, status: data.status };
   }
@@ -25,7 +28,7 @@ export const fetchOntologyTopicsAPI = async () => {
 
 export const fetchESGSummaryAPI = async (
   params: IEsgSummaryRequest
-): Promise<IErrorResponse> => {
+): Promise<IEsgSummaryResponse | IErrorResponse> => {
   const { id, query, topic, subtopics } = params;
   const url = `${OBS_DOCS_WAREHOUSE}/docs/${id}/summarize`;
   const userId = getUserId();
@@ -46,7 +49,7 @@ export const fetchESGSummaryAPI = async (
       return data;
     }
     return { error: true, message: statusText, status };
-  } catch (err) {
+  } catch (err: any) {
     const { data } = err.response;
     return { error: true, message: data.message, status: data.status };
   }
@@ -61,7 +64,7 @@ export const fetchPDFListAPI = async () => {
       return data;
     }
     return { error: true, message: statusText, status };
-  } catch (err) {
+  } catch (err: any) {
     const { data } = err.response;
     return { error: true, message: data.message, status: data.status };
   }
@@ -78,7 +81,7 @@ export const fetchPDFFileAPI = async (id: string) => {
       return data;
     }
     return { error: true, message: statusText, status };
-  } catch (err) {
+  } catch (err: any) {
     const { data } = err.response;
     return { error: true, message: data.message, status: data.status };
   }

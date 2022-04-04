@@ -5,4 +5,16 @@ export interface IEsgSummaryRequest {
   subtopics: string[];
 }
 
-export interface IEsgSummaryResponse {}
+export interface ISummary {
+  metadata: any;
+  ranks: Number[];
+  sentences: string[];
+  title: string;
+}
+export interface IEsgSummaryResponse {
+  photos: any[];
+  summary: ISummary[];
+  summary_clusters: any[];
+  title: string;
+  title_candidates: string[];
+}
