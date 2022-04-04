@@ -1,5 +1,5 @@
 export interface IErrorResponse {
-  error: Boolean;
+  error: boolean;
   message: string;
-  status: Number;
+  status: number;
 }

@@ -33,6 +33,10 @@
     "no-console": 1,
     "import/extensions": 0,
     "import/no-unresolved": 0,
-    "react/function-component-definition": 0
+    "react/function-component-definition": 0,
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }

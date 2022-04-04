@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  IDocument,
   IEsgSummaryRequest,
   IEsgSummaryResponse,
 } from '../models/esg-summary.model';
@@ -55,7 +56,9 @@ export const fetchESGSummaryAPI = async (
   }
 };
 
-export const fetchPDFListAPI = async () => {
+export const fetchPDFListAPI = async (): Promise<
+  IDocument[] | IErrorResponse
+> => {
   try {
     const url = `${OBS_DOCS_WAREHOUSE}/docs/all`;
     const response = await axios.get(url);
@@ -70,7 +73,9 @@ export const fetchPDFListAPI = async () => {
   }
 };
 
-export const fetchPDFFileAPI = async (id: string) => {
+export const fetchPDFFileAPI = async (
+  id: string
+): Promise<Blob | IErrorResponse> => {
   try {
     const url = `${OBS_DOCS_WAREHOUSE}/docs/download/${id}`;
     const response = await axios.get(url, {
