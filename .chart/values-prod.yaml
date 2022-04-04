@@ -10,6 +10,10 @@ agolo-service:
     repository: agolo.azurecr.io/service/esg-demo
     tag: staging
 
+  envStrings:
+    REACT_APP_ONTOLOGY_HANDLER_URL: 'https://ontology-handler.mip-staging.agolo.com'
+    REACT_APP_DOCS_WAREHOUSE: 'https://obs-docs-warehouse.mip-prod.agolo.com/api/v1'
+
   resources:
     limits:
       cpu: 1
