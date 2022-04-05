@@ -29,7 +29,7 @@ export const fetchOntologyTopicsAPI = async () => {
 
 export const fetchESGSummaryAPI = async (
   params: IEsgSummaryRequest
-): Promise<IEsgSummaryResponse | IErrorResponse> => {
+): Promise<IEsgSummaryResponse | IErrorResponse | any> => {
   const { id, query, topic, subtopics } = params;
   const url = `${OBS_DOCS_WAREHOUSE}/docs/${id}/summarize`;
   const userId = getUserId();
@@ -57,7 +57,7 @@ export const fetchESGSummaryAPI = async (
 };
 
 export const fetchPDFListAPI = async (): Promise<
-  IDocument[] | IErrorResponse
+  IDocument[] | IErrorResponse | any
 > => {
   try {
     const url = `${OBS_DOCS_WAREHOUSE}/docs/all`;
@@ -75,7 +75,7 @@ export const fetchPDFListAPI = async (): Promise<
 
 export const fetchPDFFileAPI = async (
   id: string
-): Promise<Blob | IErrorResponse> => {
+): Promise<Blob | IErrorResponse | any> => {
   try {
     const url = `${OBS_DOCS_WAREHOUSE}/docs/download/${id}`;
     const response = await axios.get(url, {
