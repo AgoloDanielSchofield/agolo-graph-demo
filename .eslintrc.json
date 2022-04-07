@@ -34,9 +34,11 @@
     "import/extensions": 0,
     "import/no-unresolved": 0,
     "react/function-component-definition": 0,
-    "no-shadow": "off",
+    "no-shadow": 0,
     "@typescript-eslint/no-shadow": ["error"],
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error"
+    "no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": 1,
+    "react/no-array-index-key": 0,
+    "react-hooks/exhaustive-deps": 0
   }
 }

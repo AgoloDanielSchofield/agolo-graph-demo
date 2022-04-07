@@ -1,0 +1,30 @@
+.ontology-summarizer-wrapper {
+  margin: 2rem 3rem;
+  .ant-card {
+    min-height: 75vh;
+  }
+  .title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .buttons-container {
+    float: right;
+    .action-link-button {
+      font-size: 1rem;
+    }
+  }
+}

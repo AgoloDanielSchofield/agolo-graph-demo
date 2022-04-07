@@ -7,7 +7,7 @@ const initialState = {
   isFetchingPDFList: false,
   documentsList: [],
   isFetchingESGSummary: false,
-  summary: {},
+  summary: null,
   isFetchingPDFFile: false,
   file: {},
 };
@@ -19,8 +19,8 @@ const initialAction = {
   message: '',
 };
 const esg = (
-  action: IAction = initialAction,
-  state: ESGState = initialState
+  state: ESGState = initialState,
+  action: IAction = initialAction
 ): ESGState => {
   switch (action.type) {
     case actionTypes.FETCH_TOPICS_LIST_BEGIN:
@@ -70,7 +70,7 @@ const esg = (
       return {
         ...state,
         isFetchingESGSummary: false,
-        summary: {},
+        summary: null,
       };
     case actionTypes.FETCH_PDF_FILE_BEGIN:
       return {

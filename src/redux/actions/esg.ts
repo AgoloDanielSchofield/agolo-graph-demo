@@ -10,6 +10,7 @@ import {
   IDocument,
   IEsgSummaryRequest,
   IEsgSummaryResponse,
+  ITopics,
 } from '../../models/esg-summary.model';
 import { IAction } from '../../models/shared';
 import * as actionTypes from '../constants';
@@ -71,49 +72,43 @@ export const fetchPDFFileFailure = (error: string): IAction => ({
   payload: { error },
 });
 
-export const fetchTopicsList = () => async (dispatch: Dispatch) => {
-  dispatch(fetchTopicsListBegin());
-  try {
-    const result = await fetchOntologyTopicsAPI();
-    if (result.error) {
-      dispatch(fetchTopicsListFailure(result.message));
+export const fetchTopicsList =
+  (): ITopics | any => async (dispatch: Dispatch) => {
+    dispatch(fetchTopicsListBegin());
+    try {
+      const result = await fetchOntologyTopicsAPI();
+      if (result.error) {
+        dispatch(fetchTopicsListFailure(result.message));
+        message.error(
+          'Unable to load ontologies list. Please try again later.'
+        );
+      } else {
+        const { topics } = result;
+        dispatch(fetchTopicsListSuccess(topics));
+        return topics;
+      }
+    } catch (error: any) {
+      dispatch(fetchTopicsListFailure(error.message));
       message.error('Unable to load ontologies list. Please try again later.');
-    } else {
-      const { topics } = result;
-      dispatch(fetchTopicsListSuccess(topics));
-      return topics;
     }
-  } catch (error: any) {
-    dispatch(fetchTopicsListFailure(error.message));
-    message.error('Unable to load ontologies list. Please try again later.');
-  }
-  return '';
-};
-// TODO: Use same property names from response
-const buildDocumentsObj = (res: IDocument[]): any[] =>
-  res
-    .map(({ id, name }) => ({
-      key: id,
-      title: name,
-    }))
-    .sort((a: any, b: any) =>
-      a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-    );
+    return '';
+  };
 
-export const fetchPDFList = () => async (dispatch: Dispatch) => {
-  dispatch(fetchPDFListBegin());
-  try {
-    const result = await fetchPDFListAPI();
-    const docs = buildDocumentsObj(result);
-    dispatch(fetchPDFListSuccess(docs));
-  } catch (error: any) {
-    dispatch(fetchPDFListFailure(error.message));
-    message.error('Unable to load PDF list. Please try again later.');
-  }
-};
+export const fetchPDFList =
+  (): IDocument[] | any => async (dispatch: Dispatch) => {
+    dispatch(fetchPDFListBegin());
+    try {
+      const result = await fetchPDFListAPI();
+      dispatch(fetchPDFListSuccess(result));
+    } catch (error: any) {
+      dispatch(fetchPDFListFailure(error.message));
+      message.error('Unable to load PDF list. Please try again later.');
+    }
+  };
 
 export const fetchESGSummary =
-  (params: IEsgSummaryRequest) => async (dispatch: Dispatch) => {
+  (params: IEsgSummaryRequest): IEsgSummaryResponse | any =>
+  async (dispatch: Dispatch) => {
     dispatch(fetchESGSummaryBegin());
     try {
       const result = await fetchESGSummaryAPI(params);
@@ -129,20 +124,22 @@ export const fetchESGSummary =
     }
   };
 
-export const fetchPDFFile = (id: string) => async (dispatch: Dispatch) => {
-  dispatch(fetchPDFFileBegin());
-  try {
-    const result = await fetchPDFFileAPI(id);
-    if (result.error) {
-      dispatch(fetchPDFFileFailure(result.message));
+export const fetchPDFFile =
+  (id: string): Blob | any =>
+  async (dispatch: Dispatch) => {
+    dispatch(fetchPDFFileBegin());
+    try {
+      const result = await fetchPDFFileAPI(id);
+      if (result.error) {
+        dispatch(fetchPDFFileFailure(result.message));
+        message.error('Unable to view PDF. Please try again later.');
+      } else {
+        dispatch(fetchPDFFileSuccess(result));
+        return result;
+      }
+    } catch (error: any) {
+      dispatch(fetchPDFFileFailure(error.message));
       message.error('Unable to view PDF. Please try again later.');
-    } else {
-      dispatch(fetchPDFFileSuccess(result));
-      return result;
     }
-  } catch (error: any) {
-    dispatch(fetchPDFFileFailure(error.message));
-    message.error('Unable to view PDF. Please try again later.');
-  }
-  return '';
-};
+    return '';
+  };

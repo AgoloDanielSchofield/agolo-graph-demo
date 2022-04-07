@@ -13,11 +13,11 @@ export interface ISummary {
 }
 
 export interface IEsgSummaryResponse {
-  photos: any[];
+  photos?: any[];
   summary: ISummary[];
-  summary_clusters: any[];
+  summary_clusters?: any[];
   title: string;
-  title_candidates: string[];
+  title_candidates?: string[];
 }
 
 export enum IStatus {
@@ -30,9 +30,17 @@ export enum IStatus {
 export interface IDocument {
   id: string;
   name: string;
-  numberOfPages: number;
-  parsing_status: IStatus;
+  numberOfPages?: number;
+  parsing_status?: IStatus;
   size: number;
-  summarization_status: IStatus;
+  summarization_status?: IStatus;
   type: any;
+}
+
+export interface ITopic {
+  name: string;
+  subtopics: string[];
+}
+export interface ITopics {
+  topics: ITopic[];
 }

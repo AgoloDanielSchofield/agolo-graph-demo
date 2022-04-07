@@ -1,0 +1,13 @@
+.ontology-tree-wrapper {
+  margin-top: 22vh;
+  .ant-tree-list-holder-inner {
+    max-height: 20vh;
+    overflow: auto;
+  }
+  .ant-tree-title {
+    text-transform: capitalize;
+  }
+  .empty-topics-wrapper {
+    text-align: center;
+  }
+}

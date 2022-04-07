@@ -3,6 +3,7 @@ import {
   IDocument,
   IEsgSummaryRequest,
   IEsgSummaryResponse,
+  ITopics,
 } from '../models/esg-summary.model';
 import { IErrorResponse } from '../models/shared';
 import { getCurrentUserEmail, getUserId } from '../utils/helpers';
@@ -10,7 +11,9 @@ import { getCurrentUserEmail, getUserId } from '../utils/helpers';
 const ONTOLOGY_HANDLER_URL = process.env.REACT_APP_ONTOLOGY_HANDLER_URL;
 const OBS_DOCS_WAREHOUSE = process.env.REACT_APP_DOCS_WAREHOUSE;
 
-export const fetchOntologyTopicsAPI = async () => {
+export const fetchOntologyTopicsAPI = async (): Promise<
+  ITopics | IErrorResponse | any
+> => {
   try {
     const url = `${ONTOLOGY_HANDLER_URL}/retrieve-ontology-aspect-subtopics`;
     const response = await axios.post(url, {
