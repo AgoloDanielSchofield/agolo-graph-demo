@@ -1,5 +1,5 @@
 import { IAction } from '../../models/shared';
-import * as actionTypes from '../constants';
+import * as actionTypes from '../constants/esg';
 
 const initialState = {
   isFetchingTopicsList: false,

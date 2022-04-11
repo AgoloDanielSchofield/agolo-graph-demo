@@ -9,7 +9,7 @@ import {
   fetchPDFFile,
   fetchPDFList,
   fetchTopicsList,
-} from '../../redux/actions';
+} from '../../redux/actions/esg';
 import { ENVIRONMENTAL_TOPIC } from '../../utils/constants';
 import { copyRichTextToClipboard } from '../../utils/helpers';
 import SummaryOutput from '../SummaryOutput/SummaryOutput';

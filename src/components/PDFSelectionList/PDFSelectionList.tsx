@@ -13,9 +13,10 @@ const PDFSelectionList = (props: IPdfSelectionList) => {
   }, [documentsList]);
 
   const renderOptions = () =>
-    options?.map(({ name }) => ({
+    options?.map(({ name, id }) => ({
       value: name,
       label: name,
+      key: id,
     }));
 
   const filterSearchList = (query: string): IDocument[] =>
@@ -23,8 +24,8 @@ const PDFSelectionList = (props: IPdfSelectionList) => {
       item.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
     );
 
-  const onSelect = (key: string) => {
-    setSelectedDocumentID(key);
+  const onSelect = (_: string, option: any) => {
+    setSelectedDocumentID(option.key);
     setOptions(documentsList);
   };
 

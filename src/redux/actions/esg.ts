@@ -13,7 +13,7 @@ import {
   ITopics,
 } from '../../models/esg-summary.model';
 import { IAction } from '../../models/shared';
-import * as actionTypes from '../constants';
+import * as actionTypes from '../constants/esg';
 
 export const fetchTopicsListBegin = (): IAction => ({
   type: actionTypes.FETCH_TOPICS_LIST_BEGIN,
