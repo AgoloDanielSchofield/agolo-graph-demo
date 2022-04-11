@@ -7,7 +7,7 @@ jobs:
       - image: node:14.17.5-alpine3.14
     working_directory: ~/project
     steps:
-      - run: apk update && apk add git openssh python make g++ yarn
+      - run: apk update && apk add git openssh python3 make g++ yarn
       - checkout
       - restore_cache:
           key: npm-packages-v1-test-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
