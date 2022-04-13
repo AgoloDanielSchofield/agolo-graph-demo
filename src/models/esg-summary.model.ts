@@ -34,6 +34,7 @@ export interface IDocument {
   parsing_status?: IStatus;
   size: number;
   summarization_status?: IStatus;
+  parse_timestamp: Date;
   type: any;
 }
 
