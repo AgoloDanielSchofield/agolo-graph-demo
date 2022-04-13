@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, message, Row, Typography } from 'antd';
+import { Button, Col, message, Row } from 'antd';
 import './OntologyBasedSummarizer.scss';
 import Icon from '@ant-design/icons';
 import { Dispatch } from 'redux';
@@ -16,8 +16,6 @@ import SummaryOutput from '../SummaryOutput/SummaryOutput';
 import SummaryForm from '../SummaryForm/SummaryForm';
 import { IEsgSummaryRequest, ITopic } from '../../models/esg-summary.model';
 import { IOntologyBasedSummarizer } from '../../models/esg-components.model';
-
-const { Title } = Typography;
 
 const OntologyBasedSummarizer = (props: IOntologyBasedSummarizer) => {
   const {
@@ -79,10 +77,7 @@ const OntologyBasedSummarizer = (props: IOntologyBasedSummarizer) => {
   return (
     <div className="ontology-summarizer-wrapper">
       <Row>
-        <Col span={12}>
-          <Title level={3}>ESG Report Summarization</Title>
-        </Col>
-        <Col span={12}>
+        <Col span={12} offset={12}>
           <div className="buttons-container">
             <Button
               onClick={viewOriginalPDF}

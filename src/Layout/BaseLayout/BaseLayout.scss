@@ -1,0 +1,68 @@
+.ant-layout-header {
+  background-color: #ffffff;
+}
+
+.ant-layout-footer {
+  background-image: linear-gradient(to bottom, #123075, #092056);
+  padding: 3em;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .ant-row-flex {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.ant-layout-content {
+  background-color: #ffffff;
+  padding: 50px;
+}
+
+.bg-curve {
+  position: absolute;
+  z-index: -1000;
+  right: -30%;
+  overflow: hidden;
+  transform: rotate(45deg);
+
+  &.bg-footer-curve {
+    border-radius: 5%;
+    background-color: #0f3075;
+    background-image: none;
+    width: 200px;
+    height: 200px;
+    left: -5%;
+    top: -45%;
+  }
+}
+
+.logo {
+  width: 10em;
+}
+
+.navbar {
+  display: flex;
+  float: right;
+  list-style: none;
+  padding: 0;
+}
+
+.nav-link {
+  color: #1a468f;
+  font-weight: bold;
+  padding: 0 1rem;
+  margin-left: 0.75rem;
+  transition: border-bottom 0.1s;
+  border-bottom: 3px solid transparent;
+
+  &:hover,
+  &.nav-link-active {
+    border-bottom: 3px solid #1a468f;
+  }
+}

@@ -331,7 +331,6 @@ const OBSDocsUpload = () => {
   return (
     <div className="obs-upload-wrapper">
       <div className="upload-section">
-        <h3>ESG Files</h3>
         <Dragger
           accept=".pdf"
           name="file"
