@@ -1,5 +1,5 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import './App.scss';
+import './App.less';
 import OntologyBasedSummarizer from './components/OntologyBasedSummarizer/OntologyBasedSummarizer';
 import OBSDocsUpload from './components/UploadDocument/OBSDocsUpload';
 
