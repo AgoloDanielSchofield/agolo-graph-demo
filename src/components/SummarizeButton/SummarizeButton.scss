@@ -1,11 +1,7 @@
 .summarize-button {
-  margin-top: 0.5rem;
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  padding: 0.3rem 1rem;
+  height: auto;
+  float: right;
   font-size: 1rem;
-
-  &.ant-btn-loading {
-    position: absolute !important;
-  }
+  margin-top: 1rem;
 }

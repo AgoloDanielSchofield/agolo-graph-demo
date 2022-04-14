@@ -1,10 +1,10 @@
 .obs-upload-wrapper {
-  .upload-section {
-    padding: 1rem;
-  }
-  .upload-btn {
+  margin-top: 1rem;
+  .upload-btn,
+  .sync-btn {
     display: block;
     margin: 0.5rem auto;
+    width: 140px;
   }
   .ant-table {
     overflow-x: auto;

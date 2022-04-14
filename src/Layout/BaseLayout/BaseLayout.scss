@@ -1,14 +1,17 @@
 .ant-layout-header {
   background-color: #ffffff;
+  z-index: 2;
 }
 
 .ant-layout-footer {
   background-image: linear-gradient(to bottom, #123075, #092056);
   padding: 3em;
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   z-index: 1;
   overflow: hidden;
-  height: 100px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,6 +25,8 @@
 .ant-layout-content {
   background-color: #ffffff;
   padding: 50px;
+  position: relative;
+  bottom: 50px;
 }
 
 .bg-curve {
@@ -36,7 +41,7 @@
     background-color: #0f3075;
     background-image: none;
     width: 200px;
-    height: 200px;
+    height: 150px;
     left: -5%;
     top: -45%;
   }

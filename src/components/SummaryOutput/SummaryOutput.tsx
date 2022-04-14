@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { Card, Spin } from 'antd';
 import classnames from 'classnames';
 import './SummaryOutput.scss';
-import { ISummaryOutput } from '../../models/esg-components.model';
 import { ISummary } from '../../models/esg-summary.model';
+import { ISummaryOutput } from '../../models/esg-components.model';
 
 const IS_STG_ENV = process.env.NODE_ENV !== 'production';
 

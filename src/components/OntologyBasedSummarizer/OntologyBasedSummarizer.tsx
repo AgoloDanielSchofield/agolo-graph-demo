@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, message, Row } from 'antd';
 import './OntologyBasedSummarizer.scss';
-import Icon from '@ant-design/icons';
+import { CopyOutlined, EyeOutlined } from '@ant-design/icons';
 import { Dispatch } from 'redux';
 import {
+  clearSummary,
   fetchESGSummary,
   fetchPDFFile,
   fetchPDFList,
@@ -29,6 +30,7 @@ const OntologyBasedSummarizer = (props: IOntologyBasedSummarizer) => {
     fetchPDFFileProp,
     isFetchingPDFFile,
     fetchPDFListProp,
+    clearSummaryProp,
   } = props;
 
   const [selectedDocumentID, setSelectedDocumentID] = useState<string>('');
@@ -53,6 +55,11 @@ const OntologyBasedSummarizer = (props: IOntologyBasedSummarizer) => {
   useEffect(() => {
     fetchTopics();
     fetchPDFListProp();
+
+    return () => {
+      setSummaryOutputHTML(null);
+      clearSummaryProp();
+    };
   }, []);
 
   const handleSummaryHTML = (summaryHTMLRef: HTMLDivElement | any) => {
@@ -88,7 +95,7 @@ const OntologyBasedSummarizer = (props: IOntologyBasedSummarizer) => {
               disabled={!selectedDocumentID}
               className="action-link-button"
             >
-              {!isFetchingPDFFile && <Icon type="eye" />}
+              {!isFetchingPDFFile && <EyeOutlined />}
               View Original
             </Button>
             <Button
@@ -96,14 +103,16 @@ const OntologyBasedSummarizer = (props: IOntologyBasedSummarizer) => {
               disabled={!summaryOutputHTML || isFetchingESGSummary}
               className="action-link-button"
               onClick={handleCopyButtonClick}
+              icon={<CopyOutlined />}
             >
-              <Icon type="copy" /> Copy
+              Copy
             </Button>
           </div>
         </Col>
       </Row>
+
       <Row>
-        <Col span={6}>
+        <Col span={7}>
           <SummaryForm
             topics={topics}
             isFetchingTopicsList={isFetchingTopicsList}
@@ -120,7 +129,8 @@ const OntologyBasedSummarizer = (props: IOntologyBasedSummarizer) => {
             setSummarizedDocumentTitle={setSummarizedDocumentTitle}
           />
         </Col>
-        <Col span={18}>
+
+        <Col span={17}>
           <SummaryOutput
             summary={summary}
             isFetchingESGSummary={isFetchingESGSummary}
@@ -149,6 +159,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchESGSummaryProp: (params: IEsgSummaryRequest) =>
     dispatch(fetchESGSummary(params)),
   fetchPDFFileProp: (id: string) => dispatch(fetchPDFFile(id)),
+  clearSummaryProp: () => dispatch(clearSummary()),
 });
 
 export default connect(

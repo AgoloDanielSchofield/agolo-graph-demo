@@ -89,6 +89,11 @@ const esg = (
         isFetchingPDFFile: false,
         file: {},
       };
+    case actionTypes.CLEAR_SUMMARY:
+      return {
+        ...state,
+        summary: null,
+      };
     default:
       return state;
   }

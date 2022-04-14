@@ -6,11 +6,16 @@ import {
   LoadingOutlined,
   SelectOutlined,
   SyncOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { PresetStatusColorType } from 'antd/lib/_util/colors';
 import { IDocument } from '../../models/esg-summary.model';
-import { formatBytes } from '../../utils/helpers';
+import { downloadJSONFile, formatBytes } from '../../utils/helpers';
 import './OBSDocsUpload.scss';
+import { fetchPDFList } from '../../redux/actions/esg';
+import { IObsDocsUpload } from '../../models/esg-components.model';
 
 const getTitleWithTooltip = (text: string, hoverText: string) => (
   <Tooltip title={hoverText}>{text}</Tooltip>
@@ -18,7 +23,9 @@ const getTitleWithTooltip = (text: string, hoverText: string) => (
 const OBS_DOCS_WAREHOUSE = process.env.REACT_APP_DOCS_WAREHOUSE;
 const { Dragger } = Upload;
 
-const OBSDocsUpload = () => {
+const OBSDocsUpload = (props: IObsDocsUpload) => {
+  const { documentsList, fetchPDFListProp } = props;
+
   const [docsTableData, setDocsTableData] = useState<IDocument[]>([]);
   const [docsTableLoading, setDocsTableLoading] = useState(false);
   const [uploadFilesList, setUploadFilesList] = useState<File[]>([]);
@@ -34,25 +41,13 @@ const OBSDocsUpload = () => {
 
   const fetchOBSDocs = async () => {
     setDocsTableLoading(true);
-    const response = await fetch(`${OBS_DOCS_WAREHOUSE}/docs/all`, {
-      method: 'GET',
-    });
-    const data = await response.json();
-    const sortedDocuments = getSortedDocuments(data);
-    const { status } = response;
-    if (status >= 200 && status < 300) {
-      setDocsTableData(sortedDocuments);
-    } else {
-      message.error('OBS Docs Fetch Failed');
-    }
+    await fetchPDFListProp();
+    setDocsTableData(documentsList);
     setDocsTableLoading(false);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchOBSDocs();
-    };
-    fetchData();
+    fetchOBSDocs();
   }, []);
 
   const resetState = () => {
@@ -87,7 +82,7 @@ const OBSDocsUpload = () => {
     }
   };
   const syncAll = async () => {
-    const FAILURE_MESSAGE = 'Docs sync failed';
+    const FAILURE_MESSAGE = 'Docs Sync Failed';
     try {
       const response = await fetch(`${OBS_DOCS_WAREHOUSE}/docs/sync/all`, {
         method: 'PUT',
@@ -124,17 +119,6 @@ const OBSDocsUpload = () => {
     } finally {
       resetState();
     }
-  };
-  const downloadJSONFile = async (jsonData: any, fileName: string) => {
-    const json = JSON.stringify(jsonData);
-    const blob = new Blob([json], { type: 'application/json' });
-    const href = await URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = href;
-    link.download = `${fileName}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   const fetchPDFExtractedText = async (
@@ -377,10 +361,11 @@ const OBSDocsUpload = () => {
           disabled={uploadFilesList.length === 0}
           loading={uploading}
           className="upload-btn"
+          icon={<UploadOutlined />}
         >
           {uploading ? 'Uploading' : 'Start Upload'}
         </Button>
-        <Button type="primary" onClick={syncAll} className="upload-btn">
+        <Button type="primary" onClick={syncAll} className="sync-btn">
           <SyncOutlined /> Sync All
         </Button>
       </div>
@@ -396,4 +381,11 @@ const OBSDocsUpload = () => {
   );
 };
 
-export default OBSDocsUpload;
+const mapStateToProps = ({ esg }: any) => ({
+  documentsList: esg.documentsList,
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchPDFListProp: () => dispatch(fetchPDFList()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OBSDocsUpload);

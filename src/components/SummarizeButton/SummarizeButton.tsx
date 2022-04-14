@@ -1,4 +1,4 @@
-import Icon from '@ant-design/icons';
+import { SyncOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { ISummarizeButton } from '../../models/esg-components.model';
 import './SummarizeButton.scss';
@@ -15,7 +15,7 @@ const SummarizeButton = (props: ISummarizeButton) => {
       loading={summarizeBtnLoading}
       type="primary"
     >
-      <Icon type="file-sync" /> Summarize
+      <SyncOutlined /> Summarize
     </Button>
   );
 };

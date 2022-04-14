@@ -51,9 +51,7 @@ const PDFSelectionList = (props: IPdfSelectionList) => {
       options={renderOptions()}
       onSelect={onSelect}
       onSearch={handleSearch}
-      open
-      dropdownClassName="pdf-list-dropdown"
-      style={{ width: 300 }}
+      style={{ width: '100%' }}
       defaultActiveFirstOption={false}
       notFoundContent={renderNoFoundContent()}
     >

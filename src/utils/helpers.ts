@@ -41,3 +41,15 @@ export const formatBytes = (bytes: number, decimals = 2): string => {
 
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 };
+
+export const downloadJSONFile = async (jsonData: any, fileName: string) => {
+  const json = JSON.stringify(jsonData);
+  const blob = new Blob([json], { type: 'application/json' });
+  const href = await URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = href;
+  link.download = `${fileName}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};

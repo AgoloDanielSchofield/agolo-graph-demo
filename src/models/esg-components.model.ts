@@ -62,7 +62,13 @@ export interface IOntologyBasedSummarizer extends ISummaryElements {
   summary: ISummary;
   isFetchingPDFFile: boolean;
   fetchTopicsListProp: () => ITopic[] | any;
-  fetchPDFListProp: () => {};
+  fetchPDFListProp: () => IDocument[] | any;
+  clearSummaryProp: () => void;
   fetchESGSummaryProp: (params: IEsgSummaryRequest) => {};
   fetchPDFFileProp: (id: string) => Blob | any;
+}
+
+export interface IObsDocsUpload {
+  fetchPDFListProp: () => IDocument[] | any;
+  documentsList: IDocument[];
 }

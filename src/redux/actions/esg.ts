@@ -47,6 +47,10 @@ export const fetchESGSummaryBegin = (): IAction => ({
   type: actionTypes.FETCH_ESG_SUMMARY_BEGIN,
 });
 
+export const clearSummary = (): IAction => ({
+  type: actionTypes.CLEAR_SUMMARY,
+});
+
 export const fetchESGSummarySuccess = (
   summary: IEsgSummaryResponse
 ): IAction => ({
@@ -99,7 +103,10 @@ export const fetchPDFList =
     dispatch(fetchPDFListBegin());
     try {
       const result = await fetchPDFListAPI();
-      dispatch(fetchPDFListSuccess(result));
+      const sortedList = result.sort((a: IDocument, b: IDocument) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+      dispatch(fetchPDFListSuccess(sortedList));
     } catch (error: any) {
       dispatch(fetchPDFListFailure(error.message));
       message.error('Unable to load PDF list. Please try again later.');

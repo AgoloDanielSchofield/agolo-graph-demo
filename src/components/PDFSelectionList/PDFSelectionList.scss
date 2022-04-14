@@ -1,4 +1,13 @@
-.pdf-list-dropdown {
-  height: 18vh;
-  margin-bottom: 18vh;
+.ant-select {
+  .ant-input-wrapper.ant-input-group {
+    input {
+      border-radius: 5px 0 0 5px;
+    }
+
+    .ant-input-group-addon {
+      .ant-input-search-button {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+  }
 }

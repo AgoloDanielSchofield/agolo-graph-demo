@@ -1,8 +1,9 @@
 .ontology-tree-wrapper {
-  margin-top: 22vh;
+  margin-top: 1rem;
+
   .ant-tree-list-holder-inner {
-    max-height: 20vh;
-    overflow: auto;
+    overflow-y: auto;
+    max-height: 30vh;
   }
   .ant-tree-title {
     text-transform: capitalize;

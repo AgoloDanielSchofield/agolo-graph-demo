@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Layout, Row, Col } from 'antd';
 
 import './BaseLayout.scss';
+import { FileSearchOutlined } from '@ant-design/icons';
 
 const BaseLayout = (props: any) => {
   const { Header, Content, Footer } = Layout;
